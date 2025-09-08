@@ -1,7 +1,17 @@
-<script setup></script>
+<script setup>
+import Button from "./components/Button.vue";
+</script>
 
 <template>
-  {{ new Date() }}
+  <main class="main">
+    <Button>Начать игру</Button>
+  </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+.main {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+</style>
