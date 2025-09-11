@@ -1,0 +1,96 @@
+<script setup>
+const emit = defineEmits(["turn-over", "status-ok", "status-error"]);
+
+function emitTurn() {
+  emit("turn-over", "turn");
+}
+
+function emitStatusOk() {
+  emit("status-ok", "status-ok");
+}
+
+function emitStatusError() {
+  emit("status-error", "status-error");
+}
+</script>
+
+<template>
+  <div class="card-word">
+    <div class="card-word-wrapper">
+      <div class="card-word-number">06</div>
+      <div class="card-word-content">dust-coat</div>
+      <button class="card-word-turn" @click="emitTurn">Перевернуть</button>
+      <div class="card-word-actions-buttons">
+        <button class="card-word-button-true" @click="emitStatusOk">
+          <img src="../assets/true.svg" alt="ok" />
+        </button>
+        <button class="card-word-button-false" @click="emitStatusError">
+          <img src="../assets/false.svg" alt="error" />
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.card-word {
+  position: relative;
+  width: 250px;
+  height: 376px;
+  padding: 28px 19px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.1);
+}
+
+.card-word-wrapper {
+  height: 100%;
+  border-radius: 12px;
+  border: 1px solid #cce8ff;
+}
+
+.card-word-number {
+  position: absolute;
+  top: 22px;
+  left: 35px;
+  font-size: 14px;
+  line-height: 1;
+  background-color: #ffffff;
+}
+
+.card-word-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 18px;
+}
+
+.card-word-turn {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 1.44px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  background-color: #ffffff;
+}
+
+.card-word-actions-buttons {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 97px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 4px;
+  background-color: #ffffff;
+}
+</style>
