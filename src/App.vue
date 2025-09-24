@@ -1,16 +1,49 @@
 <script setup>
-import Button from "./components/Button.vue";
-import Score from "./components/Score.vue";
-import CardWord from "./components/CardWord.vue";
+import { ref } from 'vue'
+import Button from './components/Button.vue'
+import Score from './components/Score.vue'
+import CardWord from './components/CardWord.vue'
+
+const score = ref('100')
+const cards = ref([
+  {
+    word: 'car',
+    translation: 'автомобиль',
+    state: {
+      closed: true,
+      opened: false,
+    },
+    status: {
+      success: false,
+      fail: false,
+      pending: true,
+    },
+  },
+  {
+    word: 'dog',
+    translation: 'собака',
+    state: {
+      closed: true,
+      opened: false,
+    },
+    status: {
+      success: false,
+      fail: false,
+      pending: true,
+    },
+  },
+])
 </script>
 
 <template>
   <header class="header container">
     <div class="header-title">Запомни слово</div>
-    <Score :count="100" />
+    <Score :count="score" />
   </header>
   <main class="main">
-    <CardWord />
+    <div class="cards">
+      <CardWord v-bind="cards[0]" />
+    </div>
     <Button>Начать игру</Button>
   </main>
 </template>
@@ -34,5 +67,11 @@ import CardWord from "./components/CardWord.vue";
   display: grid;
   place-items: center;
   min-height: 100vh;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 107px;
 }
 </style>

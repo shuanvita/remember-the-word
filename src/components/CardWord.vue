@@ -1,16 +1,30 @@
 <script setup>
-const emit = defineEmits(["turn-over", "status-ok", "status-error"]);
+const props = defineProps({
+  word: {
+    type: String,
+  },
+  translation: {
+    type: String,
+  },
+  state: {
+    type: Object,
+  },
+  status: {
+    type: Object,
+  },
+})
+const emit = defineEmits(['turn-over', 'status-ok', 'status-error'])
 
 function emitTurn() {
-  emit("turn-over", "turn");
+  emit('turn-over', 'turn')
 }
 
 function emitStatusOk() {
-  emit("status-ok", "status-ok");
+  emit('status-ok', 'status-ok')
 }
 
 function emitStatusError() {
-  emit("status-error", "status-error");
+  emit('status-error', 'status-error')
 }
 </script>
 
@@ -18,15 +32,18 @@ function emitStatusError() {
   <div class="card-word">
     <div class="card-word-wrapper">
       <div class="card-word-number">06</div>
-      <div class="card-word-content">dust-coat</div>
+      <div class="card-word-content">{{ props.word }}</div>
       <button class="card-word-turn" @click="emitTurn">Перевернуть</button>
-      <div class="card-word-actions-buttons">
-        <button class="card-word-button-true" @click="emitStatusOk">
-          <img src="../assets/true.svg" alt="ok" />
-        </button>
-        <button class="card-word-button-false" @click="emitStatusError">
-          <img src="../assets/false.svg" alt="error" />
-        </button>
+      <div>
+        <div class="card-word-content">{{ props.translation }}</div>
+        <div class="card-word-actions-buttons">
+          <button class="card-word-button-true" @click="emitStatusOk">
+            <img src="../assets/true.svg" alt="ok" />
+          </button>
+          <button class="card-word-button-false" @click="emitStatusError">
+            <img src="../assets/false.svg" alt="error" />
+          </button>
+        </div>
       </div>
     </div>
   </div>
