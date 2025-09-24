@@ -42,7 +42,7 @@ const cards = ref([
   </header>
   <main class="main">
     <div class="cards">
-      <CardWord v-for="card in cards" :key="card.word" v-bind="card" />
+      <CardWord v-bind="cards[0]" />
     </div>
     <Button>Начать игру</Button>
   </main>
