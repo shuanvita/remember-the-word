@@ -5,6 +5,34 @@ import Score from './components/Score.vue'
 import CardWord from './components/CardWord.vue'
 
 const score = ref('100')
+const cards = ref([
+  {
+    word: 'car',
+    translation: 'автомобиль',
+    state: {
+      closed: true,
+      opened: false,
+    },
+    status: {
+      success: false,
+      fail: false,
+      pending: true,
+    },
+  },
+  {
+    word: 'dog',
+    translation: 'собака',
+    state: {
+      closed: true,
+      opened: false,
+    },
+    status: {
+      success: false,
+      fail: false,
+      pending: true,
+    },
+  },
+])
 </script>
 
 <template>
@@ -13,7 +41,9 @@ const score = ref('100')
     <Score :count="score" />
   </header>
   <main class="main">
-    <CardWord />
+    <div class="cards">
+      <CardWord v-for="card in cards" :key="card.word" v-bind="card" />
+    </div>
     <Button>Начать игру</Button>
   </main>
 </template>
@@ -37,5 +67,11 @@ const score = ref('100')
   display: grid;
   place-items: center;
   min-height: 100vh;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 107px;
 }
 </style>

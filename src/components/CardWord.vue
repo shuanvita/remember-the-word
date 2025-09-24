@@ -1,17 +1,18 @@
 <script setup>
-import { ref } from 'vue'
-const word = ref('car')
-const translation = ref('автомобиль')
-const state = ref({
-  closed: true,
-  opened: false,
+const props = defineProps({
+  word: {
+    type: String,
+  },
+  translation: {
+    type: String,
+  },
+  state: {
+    type: Object,
+  },
+  status: {
+    type: Object,
+  },
 })
-const status = ref({
-  success: false,
-  fail: false,
-  pending: true,
-})
-
 const emit = defineEmits(['turn-over', 'status-ok', 'status-error'])
 
 function emitTurn() {
@@ -31,10 +32,10 @@ function emitStatusError() {
   <div class="card-word">
     <div class="card-word-wrapper">
       <div class="card-word-number">06</div>
-      <div class="card-word-content">{{ word }}</div>
+      <div class="card-word-content">{{ props.word }}</div>
       <button class="card-word-turn" @click="emitTurn">Перевернуть</button>
       <div>
-        <div class="card-word-content">{{ translation }}</div>
+        <div class="card-word-content">{{ props.translation }}</div>
         <div class="card-word-actions-buttons">
           <button class="card-word-button-true" @click="emitStatusOk">
             <img src="../assets/true.svg" alt="ok" />
