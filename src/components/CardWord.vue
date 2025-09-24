@@ -1,16 +1,29 @@
 <script setup>
-const emit = defineEmits(["turn-over", "status-ok", "status-error"]);
+import { ref } from 'vue'
+const word = ref('car')
+const translation = ref('автомобиль')
+const state = ref({
+  closed: true,
+  opened: false,
+})
+const status = ref({
+  success: false,
+  fail: false,
+  pending: true,
+})
+
+const emit = defineEmits(['turn-over', 'status-ok', 'status-error'])
 
 function emitTurn() {
-  emit("turn-over", "turn");
+  emit('turn-over', 'turn')
 }
 
 function emitStatusOk() {
-  emit("status-ok", "status-ok");
+  emit('status-ok', 'status-ok')
 }
 
 function emitStatusError() {
-  emit("status-error", "status-error");
+  emit('status-error', 'status-error')
 }
 </script>
 
@@ -18,15 +31,18 @@ function emitStatusError() {
   <div class="card-word">
     <div class="card-word-wrapper">
       <div class="card-word-number">06</div>
-      <div class="card-word-content">dust-coat</div>
+      <div class="card-word-content">{{ word }}</div>
       <button class="card-word-turn" @click="emitTurn">Перевернуть</button>
-      <div class="card-word-actions-buttons">
-        <button class="card-word-button-true" @click="emitStatusOk">
-          <img src="../assets/true.svg" alt="ok" />
-        </button>
-        <button class="card-word-button-false" @click="emitStatusError">
-          <img src="../assets/false.svg" alt="error" />
-        </button>
+      <div>
+        <div class="card-word-content">{{ translation }}</div>
+        <div class="card-word-actions-buttons">
+          <button class="card-word-button-true" @click="emitStatusOk">
+            <img src="../assets/true.svg" alt="ok" />
+          </button>
+          <button class="card-word-button-false" @click="emitStatusError">
+            <img src="../assets/false.svg" alt="error" />
+          </button>
+        </div>
       </div>
     </div>
   </div>

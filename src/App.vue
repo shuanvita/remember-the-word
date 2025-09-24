@@ -1,13 +1,16 @@
 <script setup>
-import Button from "./components/Button.vue";
-import Score from "./components/Score.vue";
-import CardWord from "./components/CardWord.vue";
+import { ref } from 'vue'
+import Button from './components/Button.vue'
+import Score from './components/Score.vue'
+import CardWord from './components/CardWord.vue'
+
+const score = ref('100')
 </script>
 
 <template>
   <header class="header container">
     <div class="header-title">Запомни слово</div>
-    <Score :count="100" />
+    <Score :count="score" />
   </header>
   <main class="main">
     <CardWord />
