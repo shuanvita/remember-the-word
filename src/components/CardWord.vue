@@ -15,15 +15,15 @@ const props = defineProps({
 })
 const emit = defineEmits(['turn-over', 'status-ok', 'status-error'])
 
-function emitTurn() {
+const emitTurn = () => {
   emit('turn-over', 'turn')
 }
 
-function emitStatusOk() {
+const emitStatusOk = () => {
   emit('status-ok', 'status-ok')
 }
 
-function emitStatusError() {
+const emitStatusError = () => {
   emit('status-error', 'status-error')
 }
 </script>
@@ -32,9 +32,11 @@ function emitStatusError() {
   <div class="card-word">
     <div class="card-word-wrapper">
       <div class="card-word-number">06</div>
-      <div class="card-word-content">{{ props.word }}</div>
-      <button class="card-word-turn" @click="emitTurn">Перевернуть</button>
-      <div>
+      <div v-if="props.state.closed">
+        <div class="card-word-content">{{ props.word }}</div>
+        <button class="card-word-turn" @click="emitTurn">Перевернуть</button>
+      </div>
+      <div v-if="props.state.opened">
         <div class="card-word-content">{{ props.translation }}</div>
         <div class="card-word-actions-buttons">
           <button class="card-word-button-true" @click="emitStatusOk">
@@ -44,6 +46,12 @@ function emitStatusError() {
             <img src="../assets/false.svg" alt="error" />
           </button>
         </div>
+      </div>
+      <div v-if="props.status.success">
+        <img class="card-word-icon" src="../assets/true.svg" alt="ok" />
+      </div>
+      <div v-if="props.status.fail">
+        <img class="card-word-icon" src="../assets/false.svg" alt="ok" />
       </div>
     </div>
   </div>
@@ -61,6 +69,9 @@ function emitStatusError() {
 }
 
 .card-word-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100%;
   border-radius: 12px;
   border: 1px solid #cce8ff;
@@ -109,5 +120,14 @@ function emitStatusError() {
   gap: 10px;
   padding: 0 4px;
   background-color: #ffffff;
+}
+
+.card-word-icon {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 36px;
+  height: 36px;
+  transform: translateX(-50%);
 }
 </style>

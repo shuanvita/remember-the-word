@@ -4,7 +4,7 @@ import Button from './components/Button.vue'
 import Score from './components/Score.vue'
 import CardWord from './components/CardWord.vue'
 
-const score = ref('100')
+const score = ref(100)
 const cards = ref([
   {
     word: 'car',
@@ -33,6 +33,21 @@ const cards = ref([
     },
   },
 ])
+
+const turnCard = (card) => {
+  card.state.opened = true
+  card.state.closed = false
+}
+
+const statusCardSuccess = (card) => {
+  card.status.success = true
+  card.status.fail = false
+}
+
+const statusCardError = (card) => {
+  card.status.fail = true
+  card.status.success = false
+}
 </script>
 
 <template>
@@ -42,7 +57,14 @@ const cards = ref([
   </header>
   <main class="main">
     <div class="cards">
-      <CardWord v-bind="cards[0]" />
+      <CardWord
+        v-for="card in cards"
+        :key="card.word"
+        v-bind="card"
+        @turn-over="turnCard(card)"
+        @status-ok="statusCardSuccess(card)"
+        @status-error="statusCardError(card)"
+      />
     </div>
     <Button>Начать игру</Button>
   </main>
