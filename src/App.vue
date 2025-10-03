@@ -1,38 +1,14 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import Button from './components/Button.vue'
 import Score from './components/Score.vue'
 import CardWord from './components/CardWord.vue'
 
+const API_ENDPOINT = 'http://localhost:8080/api/random-words'
+
 const score = ref(100)
-const cards = ref([
-  {
-    word: 'car',
-    translation: 'автомобиль',
-    state: {
-      closed: true,
-      opened: false,
-    },
-    status: {
-      success: false,
-      fail: false,
-      pending: true,
-    },
-  },
-  {
-    word: 'dog',
-    translation: 'собака',
-    state: {
-      closed: true,
-      opened: false,
-    },
-    status: {
-      success: false,
-      fail: false,
-      pending: true,
-    },
-  },
-])
+const isStartGame = ref(false)
+const cards = ref([])
 
 const turnCard = (card) => {
   card.state.opened = true
@@ -48,6 +24,35 @@ const statusCardError = (card) => {
   card.status.fail = true
   card.status.success = false
 }
+
+// const startGame = () => {
+//   isStartGame.value = true
+// }
+
+const getWords = async () => {
+  try {
+    isStartGame.value = true
+    const res = await fetch(API_ENDPOINT)
+    if (!res.status !== 200) {
+      cards.value = null
+    }
+    const data = await res.json()
+    cards.value = data.map((word) => ({
+      ...word,
+      state: {
+        closed: true,
+        opened: false,
+      },
+      status: {
+        success: false,
+        fail: false,
+        pending: true,
+      },
+    }))
+  } catch (error) {
+    console.error('Ошибка:', error)
+  }
+}
 </script>
 
 <template>
@@ -56,17 +61,18 @@ const statusCardError = (card) => {
     <Score :count="score" />
   </header>
   <main class="main">
-    <div class="cards">
+    <div v-if="isStartGame" class="cards">
       <CardWord
-        v-for="card in cards"
+        v-for="(card, idx) in cards"
         :key="card.word"
         v-bind="card"
+        :number="idx + 1"
         @turn-over="turnCard(card)"
         @status-ok="statusCardSuccess(card)"
         @status-error="statusCardError(card)"
       />
     </div>
-    <Button>Начать игру</Button>
+    <Button v-if="!isStartGame" class="start-game-button" @click="getWords">Начать игру</Button>
   </main>
 </template>
 
@@ -95,5 +101,11 @@ const statusCardError = (card) => {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 107px;
+}
+
+.start-game-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 </style>
