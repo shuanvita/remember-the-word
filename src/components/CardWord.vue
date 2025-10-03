@@ -1,5 +1,8 @@
 <script setup>
 const props = defineProps({
+  number: {
+    type: Number,
+  },
   word: {
     type: String,
   },
@@ -31,7 +34,7 @@ const emitStatusError = () => {
 <template>
   <div class="card-word">
     <div class="card-word-wrapper">
-      <div class="card-word-number">06</div>
+      <div class="card-word-number">{{ props.number }}</div>
       <div v-if="props.state.closed">
         <div class="card-word-content">{{ props.word }}</div>
         <button class="card-word-turn" @click="emitTurn">Перевернуть</button>
