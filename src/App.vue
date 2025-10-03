@@ -25,15 +25,11 @@ const statusCardError = (card) => {
   card.status.success = false
 }
 
-// const startGame = () => {
-//   isStartGame.value = true
-// }
-
 const getWords = async () => {
   try {
     isStartGame.value = true
     const res = await fetch(API_ENDPOINT)
-    if (!res.status !== 200) {
+    if (res.status !== 200) {
       cards.value = null
     }
     const data = await res.json()
