@@ -6,6 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+api-windows-amd64.exe
+muellerdict.db
 
 node_modules
 dist
